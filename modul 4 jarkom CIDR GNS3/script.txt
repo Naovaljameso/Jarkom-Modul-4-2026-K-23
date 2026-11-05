@@ -1,0 +1,75 @@
+1. Router Cyberia (Gateway Utama & NAT)
+Bash
+cat << 'EOF' > /root/setup.sh
+#!/bin/bash
+ip link set dev eth0 up
+ip link set dev eth1 up
+ip link set dev eth2 up
+
+# IP Static & Default Route NAT GNS3
+ip addr add 192.168.122.100/24 dev eth0 2>/dev/null || true
+ip route add default via 192.168.122.1 dev eth0 2>/dev/null || true
+
+# IP Internal Cyberia
+ip addr add 10.75.0.1/25 dev eth1 2>/dev/null || true
+ip addr add 10.75.0.129/30 dev eth2 2>/dev/null || true
+
+# Forwarding & NAT Masquerade
+sysctl -w net.ipv4.ip_forward=1
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE 2>/dev/null || true
+
+# Route Supernet C1 ke seluruh internal The Wired
+ip route add 10.75.0.0/17 via 10.75.0.130 2>/dev/null || true
+EOF
+2. Router Wired (Pusat Percabangan Utama)
+Bash
+cat << 'EOF' > /root/setup.sh
+#!/bin/bash
+ip addr add 10.75.0.130/30 dev eth0 2>/dev/null || true
+ip link set dev eth0 up
+ip addr add 10.75.32.1/29 dev eth1 2>/dev/null || true
+ip link set dev eth1 up
+ip addr add 10.75.64.1/30 dev eth2 2>/dev/null || true
+ip link set dev eth2 up
+ip addr add 10.75.80.1/30 dev eth3 2>/dev/null || true
+ip link set dev eth3 up
+
+sysctl -w net.ipv4.ip_forward=1
+
+# Supernet B1 (Cabang Kiri), B2 (Cabang Kanan), B3 (Cabang Bawah)
+ip route add 10.75.32.0/19 via 10.75.32.2 2>/dev/null || true
+ip route add 10.75.64.0/21 via 10.75.64.2 2>/dev/null || true
+ip route add 10.75.80.0/21 via 10.75.80.2 2>/dev/null || true
+
+# Default route balik ke Cyberia
+ip route add default via 10.75.0.129 2>/dev/null || true
+EOF
+3. Template Router Cabang (Contoh: Router Shibuya)
+Bash
+cat << 'EOF' > /root/setup.sh
+#!/bin/bash
+ip addr add 10.75.85.194/30 dev eth0 2>/dev/null || true
+ip link set dev eth0 up
+ip addr add 10.75.86.1/26 dev eth1 2>/dev/null || true
+ip link set dev eth1 up
+
+sysctl -w net.ipv4.ip_forward=1
+ip route add default via 10.75.85.193 2>/dev/null || true
+EOF
+4. Template Node Host Docker (Contoh: Host Lain & JJ)
+Bash
+# Node Lain
+cat << 'EOF' > /root/setup.sh
+#!/bin/bash
+ip addr add 10.75.86.2/26 dev eth0 2>/dev/null || true
+ip link set dev eth0 up
+ip route add default via 10.75.86.1 2>/dev/null || true
+EOF
+
+# Node JJ
+cat << 'EOF' > /root/setup.sh
+#!/bin/bash
+ip addr add 10.75.0.2/25 dev eth0 2>/dev/null || true
+ip link set dev eth0 up
+ip route add default via 10.75.0.1 2>/dev/null || true
+EOF
