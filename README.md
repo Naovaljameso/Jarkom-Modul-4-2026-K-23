@@ -4,7 +4,7 @@
 | Nama | NRP | Bagian |
 |---|---|---|
 | Naoval James Osamah | 5027251092 | Cisco Packet Tracer — **VLSM** |
-| Nur Rizki Syahbana | _(NRP)_ | GNS3 — **CIDR** |
+| Nur Rizki Syahbana | 5027251095 | GNS3 — **CIDR** |
 
 Sesuai ketentuan soal, CPT dan GNS3 memakai metode classless yang berbeda: **VLSM di CPT** dan **CIDR di GNS3**.
 
@@ -18,21 +18,21 @@ Sesuai ketentuan soal, CPT dan GNS3 memakai metode classless yang berbeda: **VLS
 5. [Tree VLSM](#5-tree-vlsm)
 6. [Konfigurasi Cisco Packet Tracer](#6-konfigurasi-cisco-packet-tracer)
 7. [Routing Statis](#7-routing-statis)
-8. [Pengujian (Ping)](#8-pengujian-ping)
-9. [Perhitungan CIDR (GNS3)](#9-perhitungan-cidr-gns3)
+8. [Pengujian (Ping) CPT](#8-pengujian-ping-cpt)
+9. [Perhitungan & Konfigurasi CIDR (GNS3)](#9-perhitungan--konfigurasi-cidr-gns3)
 
 ---
 
 ## 1. Struktur Repository
 
-```
+```text
 Jarkom-Modul-4-2026-K-23/
 ├── README.md
 ├── Jarkom-Modul-4-2026-K-23.xlsx        # Spreadsheet perhitungan (Rute, VLSM, CIDR)
 ├── images/
 │   ├── topologi/                        # Topologi CPT (polos dan dengan penanda subnet)
 │   ├── tree/                            # Tree VLSM dan Tree CIDR
-│   └── ping/                            # Screenshot hasil ping (01–16)
+│   └── ping/                            # Screenshot hasil ping (01–16) CPT & GNS3
 ├── modul 4 jarkom VLSM cisco/
 │   └── Jarkom-Modul-4-2026-K-23.pkt     # File Cisco Packet Tracer
 └── modul 4 jarkom CIDR GNS3/
@@ -127,7 +127,7 @@ Metode mengikuti Jeremy's IT Lab (CCNA Day 15 — Subnetting Part 3, VLSM):
 ### Contoh perhitungan biner
 
 **A4 (/22), n = 10** — bit host masuk ke oktet ke-3:
-```
+```text
 Netmask   : 11111111.11111111.111111|00.00000000 = 255.255.252.0
 Network   : 00001010.01001011.000000|00.00000000 = 10.75.0.0
 Broadcast : 00001010.01001011.000000|11.11111111 = 10.75.3.255
@@ -135,17 +135,10 @@ Broadcast : 00001010.01001011.000000|11.11111111 = 10.75.3.255
 Subnet berikutnya: 10.75.3.255 + 1 = **10.75.4.0**
 
 **A1 (/25), n = 7:**
-```
+```text
 Netmask   : 11111111.11111111.11111111.1|0000000 = 255.255.255.128
 Network   : 00001010.01001011.00001110.0|0000000 = 10.75.14.0
 Broadcast : 00001010.01001011.00001110.0|1111111 = 10.75.14.127
-```
-
-**A2 (/30), n = 2:**
-```
-Netmask   : 11111111.11111111.11111111.111111|00 = 255.255.255.252
-Network   : 00001010.01001011.00010000.001110|00 = 10.75.16.56
-Broadcast : 00001010.01001011.00010000.001110|11 = 10.75.16.59
 ```
 
 ### Hasil pembagian IP VLSM
@@ -177,8 +170,6 @@ Broadcast : 00001010.01001011.00010000.001110|11 = 10.75.16.59
 | A20 | 2 | /30 | 10.75.16.80 | 255.255.255.252 | 10.75.16.83 | 10.75.16.81 - 10.75.16.82 |
 | A22 | 2 | /30 | 10.75.16.84 | 255.255.255.252 | 10.75.16.87 | 10.75.16.85 - 10.75.16.86 |
 | A24 | 2 | /30 | 10.75.16.88 | 255.255.255.252 | 10.75.16.91 | 10.75.16.89 - 10.75.16.90 |
-
-Seluruh subnet tersusun rapat dari `10.75.0.0` sampai `10.75.16.91` **tanpa celah** (4188 alamat), di dalam blok `10.75.0.0/19`.
 
 ---
 
@@ -219,36 +210,6 @@ Blok `10.75.0.0/19` dibelah dua terus-menerus sampai setiap subnet mendapat temp
 | Phantoma | Knights | Switch12 | Shibuya | — |
 | Shibuya | Phantoma | Switch13 | — | — |
 
-### Konfigurasi node (Desktop → IP Configuration → Static)
-
-| Node | IP Address | Subnet Mask | Default Gateway |
-|---|---|---|---|
-| JJ | 10.75.14.2 | 255.255.255.128 | 10.75.14.1 |
-| MyuMyu | 10.75.14.3 | 255.255.255.128 | 10.75.14.1 |
-| Karl | 10.75.0.2 | 255.255.252.0 | 10.75.0.1 |
-| Lin | 10.75.0.3 | 255.255.252.0 | 10.75.0.1 |
-| Juri | 10.75.15.194 | 255.255.255.192 | 10.75.15.193 |
-| Masayuki | 10.75.8.2 | 255.255.254.0 | 10.75.8.1 |
-| Akashic | 10.75.16.42 | 255.255.255.248 | 10.75.16.41 |
-| Omnipresence | 10.75.4.2 | 255.255.252.0 | 10.75.4.1 |
-| Denpa | 10.75.4.3 | 255.255.252.0 | 10.75.4.1 |
-| Alice | 10.75.12.2 | 255.255.255.0 | 10.75.12.1 |
-| Reika | 10.75.12.3 | 255.255.255.0 | 10.75.12.1 |
-| Taro | 10.75.15.66 | 255.255.255.192 | 10.75.15.65 |
-| Yasuo | 10.75.13.2 | 255.255.255.0 | 10.75.13.1 |
-| Miho | 10.75.13.3 | 255.255.255.0 | 10.75.13.1 |
-| Kuma | 10.75.13.4 | 255.255.255.0 | 10.75.13.1 |
-| Collective | 10.75.10.2 | 255.255.254.0 | 10.75.10.1 |
-| Ghost | 10.75.10.3 | 255.255.254.0 | 10.75.10.1 |
-| Lilith | 10.75.14.130 | 255.255.255.128 | 10.75.14.129 |
-| Specter | 10.75.14.131 | 255.255.255.128 | 10.75.14.129 |
-| Chisa | 10.75.15.130 | 255.255.255.192 | 10.75.15.129 |
-| Hodgeson | 10.75.15.131 | 255.255.255.192 | 10.75.15.129 |
-| Eiri | 10.75.16.50 | 255.255.255.248 | 10.75.16.49 |
-| Semi | 10.75.16.2 | 255.255.255.224 | 10.75.16.1 |
-| Lain | 10.75.15.2 | 255.255.255.192 | 10.75.15.1 |
-| Mika | 10.75.15.3 | 255.255.255.192 | 10.75.15.1 |
-
 ---
 
 ## 7. Routing Statis
@@ -260,379 +221,109 @@ Topologi berbentuk pohon dengan Cyberia di puncak, sehingga routing dibuat seefi
 
 Cyberia cukup memiliki **satu route ringkasan** `10.75.0.0/19` ke Wired; subnet A1 dan A2 tetap dipakai langsung karena prefix-nya lebih spesifik. Router ujung (Psyche, Copland, Accela, Navi, Shibuya) cukup memiliki 1 default route.
 
-### Konfigurasi lengkap setiap router (IP + routing)
-
-### Cyberia
-```
-enable
-configure terminal
-hostname Cyberia
-interface fa0/1
- ip address 10.75.14.1 255.255.255.128
- no shutdown
-interface fa1/0
- ip address 10.75.16.57 255.255.255.252
- no shutdown
-ip route 10.75.0.0 255.255.224.0 10.75.16.58
-end
-write memory
-```
-
-### Wired
-```
-enable
-configure terminal
-hostname Wired
-interface fa0/0
- ip address 10.75.16.58 255.255.255.252
- no shutdown
-interface fa0/1
- ip address 10.75.16.33 255.255.255.248
- no shutdown
-interface fa1/0
- ip address 10.75.16.65 255.255.255.252
- no shutdown
-interface fa1/1
- ip address 10.75.16.69 255.255.255.252
- no shutdown
-ip route 0.0.0.0 0.0.0.0 10.75.16.57
-ip route 10.75.0.0 255.255.252.0 10.75.16.34
-ip route 10.75.15.192 255.255.255.192 10.75.16.35
-ip route 10.75.8.0 255.255.254.0 10.75.16.35
-ip route 10.75.16.40 255.255.255.248 10.75.16.36
-ip route 10.75.16.60 255.255.255.252 10.75.16.36
-ip route 10.75.4.0 255.255.252.0 10.75.16.36
-ip route 10.75.12.0 255.255.255.0 10.75.16.66
-ip route 10.75.15.64 255.255.255.192 10.75.16.66
-ip route 10.75.13.0 255.255.255.0 10.75.16.66
-ip route 10.75.10.0 255.255.254.0 10.75.16.70
-ip route 10.75.16.72 255.255.255.252 10.75.16.70
-ip route 10.75.14.128 255.255.255.128 10.75.16.70
-ip route 10.75.16.76 255.255.255.252 10.75.16.70
-ip route 10.75.15.128 255.255.255.192 10.75.16.70
-ip route 10.75.16.80 255.255.255.252 10.75.16.70
-ip route 10.75.16.48 255.255.255.248 10.75.16.70
-ip route 10.75.16.84 255.255.255.252 10.75.16.70
-ip route 10.75.16.0 255.255.255.224 10.75.16.70
-ip route 10.75.16.88 255.255.255.252 10.75.16.70
-ip route 10.75.15.0 255.255.255.192 10.75.16.70
-end
-write memory
-```
-
-### Psyche
-```
-enable
-configure terminal
-hostname Psyche
-interface fa0/0
- ip address 10.75.16.34 255.255.255.248
- no shutdown
-interface fa0/1
- ip address 10.75.0.1 255.255.252.0
- no shutdown
-ip route 0.0.0.0 0.0.0.0 10.75.16.33
-end
-write memory
-```
-
-### Copland
-```
-enable
-configure terminal
-hostname Copland
-interface fa0/0
- ip address 10.75.16.35 255.255.255.248
- no shutdown
-interface fa0/1
- ip address 10.75.15.193 255.255.255.192
- no shutdown
-interface fa1/0
- ip address 10.75.8.1 255.255.254.0
- no shutdown
-ip route 0.0.0.0 0.0.0.0 10.75.16.33
-end
-write memory
-```
-
-### Schumann
-```
-enable
-configure terminal
-hostname Schumann
-interface fa0/0
- ip address 10.75.16.36 255.255.255.248
- no shutdown
-interface fa0/1
- ip address 10.75.16.41 255.255.255.248
- no shutdown
-interface fa1/0
- ip address 10.75.16.61 255.255.255.252
- no shutdown
-ip route 0.0.0.0 0.0.0.0 10.75.16.33
-ip route 10.75.4.0 255.255.252.0 10.75.16.62
-end
-write memory
-```
-
-### Accela
-```
-enable
-configure terminal
-hostname Accela
-interface fa0/0
- ip address 10.75.16.62 255.255.255.252
- no shutdown
-interface fa0/1
- ip address 10.75.4.1 255.255.252.0
- no shutdown
-ip route 0.0.0.0 0.0.0.0 10.75.16.61
-end
-write memory
-```
-
-### Navi
-```
-enable
-configure terminal
-hostname Navi
-interface fa0/0
- ip address 10.75.16.66 255.255.255.252
- no shutdown
-interface fa0/1
- ip address 10.75.12.1 255.255.255.0
- no shutdown
-interface fa1/0
- ip address 10.75.15.65 255.255.255.192
- no shutdown
-interface fa1/1
- ip address 10.75.13.1 255.255.255.0
- no shutdown
-ip route 0.0.0.0 0.0.0.0 10.75.16.65
-end
-write memory
-```
-
-### Tachibana
-```
-enable
-configure terminal
-hostname Tachibana
-interface fa0/0
- ip address 10.75.16.70 255.255.255.252
- no shutdown
-interface fa0/1
- ip address 10.75.10.1 255.255.254.0
- no shutdown
-interface fa1/0
- ip address 10.75.16.73 255.255.255.252
- no shutdown
-ip route 0.0.0.0 0.0.0.0 10.75.16.69
-ip route 10.75.14.128 255.255.255.128 10.75.16.74
-ip route 10.75.16.76 255.255.255.252 10.75.16.74
-ip route 10.75.15.128 255.255.255.192 10.75.16.74
-ip route 10.75.16.80 255.255.255.252 10.75.16.74
-ip route 10.75.16.48 255.255.255.248 10.75.16.74
-ip route 10.75.16.84 255.255.255.252 10.75.16.74
-ip route 10.75.16.0 255.255.255.224 10.75.16.74
-ip route 10.75.16.88 255.255.255.252 10.75.16.74
-ip route 10.75.15.0 255.255.255.192 10.75.16.74
-end
-write memory
-```
-
-### Deus
-```
-enable
-configure terminal
-hostname Deus
-interface fa0/0
- ip address 10.75.16.74 255.255.255.252
- no shutdown
-interface fa0/1
- ip address 10.75.14.129 255.255.255.128
- no shutdown
-interface fa1/0
- ip address 10.75.16.77 255.255.255.252
- no shutdown
-ip route 0.0.0.0 0.0.0.0 10.75.16.73
-ip route 10.75.15.128 255.255.255.192 10.75.16.78
-ip route 10.75.16.80 255.255.255.252 10.75.16.78
-ip route 10.75.16.48 255.255.255.248 10.75.16.78
-ip route 10.75.16.84 255.255.255.252 10.75.16.78
-ip route 10.75.16.0 255.255.255.224 10.75.16.78
-ip route 10.75.16.88 255.255.255.252 10.75.16.78
-ip route 10.75.15.0 255.255.255.192 10.75.16.78
-end
-write memory
-```
-
-### Protocol7
-```
-enable
-configure terminal
-hostname Protocol7
-interface fa0/0
- ip address 10.75.16.78 255.255.255.252
- no shutdown
-interface fa0/1
- ip address 10.75.15.129 255.255.255.192
- no shutdown
-interface fa1/0
- ip address 10.75.16.81 255.255.255.252
- no shutdown
-ip route 0.0.0.0 0.0.0.0 10.75.16.77
-ip route 10.75.16.48 255.255.255.248 10.75.16.82
-ip route 10.75.16.84 255.255.255.252 10.75.16.82
-ip route 10.75.16.0 255.255.255.224 10.75.16.82
-ip route 10.75.16.88 255.255.255.252 10.75.16.82
-ip route 10.75.15.0 255.255.255.192 10.75.16.82
-end
-write memory
-```
-
-### Knights
-```
-enable
-configure terminal
-hostname Knights
-interface fa0/0
- ip address 10.75.16.82 255.255.255.252
- no shutdown
-interface fa0/1
- ip address 10.75.16.49 255.255.255.248
- no shutdown
-interface fa1/0
- ip address 10.75.16.85 255.255.255.252
- no shutdown
-ip route 0.0.0.0 0.0.0.0 10.75.16.81
-ip route 10.75.16.0 255.255.255.224 10.75.16.86
-ip route 10.75.16.88 255.255.255.252 10.75.16.86
-ip route 10.75.15.0 255.255.255.192 10.75.16.86
-end
-write memory
-```
-
-### Phantoma
-```
-enable
-configure terminal
-hostname Phantoma
-interface fa0/0
- ip address 10.75.16.86 255.255.255.252
- no shutdown
-interface fa0/1
- ip address 10.75.16.1 255.255.255.224
- no shutdown
-interface fa1/0
- ip address 10.75.16.89 255.255.255.252
- no shutdown
-ip route 0.0.0.0 0.0.0.0 10.75.16.85
-ip route 10.75.15.0 255.255.255.192 10.75.16.90
-end
-write memory
-```
-
-### Shibuya
-```
-enable
-configure terminal
-hostname Shibuya
-interface fa0/0
- ip address 10.75.16.90 255.255.255.252
- no shutdown
-interface fa0/1
- ip address 10.75.15.1 255.255.255.192
- no shutdown
-ip route 0.0.0.0 0.0.0.0 10.75.16.89
-end
-write memory
-```
+*(Konfigurasi lengkap routing statis CPT dapat dilihat pada file Packet Tracer terlampir)*
 
 ---
 
-## 8. Pengujian (Ping)
+## 8. Pengujian (Ping) CPT
 
 Pengujian dilakukan dari **JJ** (subnet A1, paling atas) dan **Lain** (subnet A25, paling bawah) ke **seluruh 24 node lain**. Setiap balasan ping juga membuktikan jalur pulangnya, sehingga seluruh route di 13 router teruji.
-
-> Ping pertama setelah file dibuka bisa timeout karena router sedang melakukan ARP. Karena itu setiap tujuan diberi ping pemanasan singkat terlebih dahulu, lalu ping utama 4 paket.
 
 **Hasil: 48/48 tes — semua 4/4 Reply, 0% loss.**
 
 **01 JJ-ke-Karl-Lin-Juri**
-
 ![01-JJ-ke-Karl-Lin-Juri](images/ping/01-JJ-ke-Karl-Lin-Juri.jpg)
 
 **02 JJ-ke-Masayuki-Akashic-Omnipresence**
-
 ![02-JJ-ke-Masayuki-Akashic-Omnipresence](images/ping/02-JJ-ke-Masayuki-Akashic-Omnipresence.jpg)
 
-**03 JJ-ke-Denpa-Alice-Reika**
-
-![03-JJ-ke-Denpa-Alice-Reika](images/ping/03-JJ-ke-Denpa-Alice-Reika.jpg)
-
-**04 JJ-ke-Taro-Yasuo-Miho**
-
-![04-JJ-ke-Taro-Yasuo-Miho](images/ping/04-JJ-ke-Taro-Yasuo-Miho.jpg)
-
-**05 JJ-ke-Kuma-Collective-Ghost**
-
-![05-JJ-ke-Kuma-Collective-Ghost](images/ping/05-JJ-ke-Kuma-Collective-Ghost.jpg)
-
-**06 JJ-ke-Lilith-Specter-Chisa**
-
-![06-JJ-ke-Lilith-Specter-Chisa](images/ping/06-JJ-ke-Lilith-Specter-Chisa.jpg)
-
-**07 JJ-ke-Hodgeson-Eiri-Semi**
-
-![07-JJ-ke-Hodgeson-Eiri-Semi](images/ping/07-JJ-ke-Hodgeson-Eiri-Semi.jpg)
-
-**08 JJ-ke-Lain-Mika-MyuMyu**
-
-![08-JJ-ke-Lain-Mika-MyuMyu](images/ping/08-JJ-ke-Lain-Mika-MyuMyu.jpg)
-
-**09 Lain-ke-JJ-MyuMyu-Karl**
-
-![09-Lain-ke-JJ-MyuMyu-Karl](images/ping/09-Lain-ke-JJ-MyuMyu-Karl.jpg)
-
-**10 Lain-ke-Lin-Juri-Masayuki**
-
-![10-Lain-ke-Lin-Juri-Masayuki](images/ping/10-Lain-ke-Lin-Juri-Masayuki.jpg)
-
-**11 Lain-ke-Akashic-Omnipresence-Denpa**
-
-![11-Lain-ke-Akashic-Omnipresence-Denpa](images/ping/11-Lain-ke-Akashic-Omnipresence-Denpa.jpg)
-
-**12 Lain-ke-Alice-Reika-Taro**
-
-![12-Lain-ke-Alice-Reika-Taro](images/ping/12-Lain-ke-Alice-Reika-Taro.jpg)
-
-**13 Lain-ke-Yasuo-Miho-Kuma**
-
-![13-Lain-ke-Yasuo-Miho-Kuma](images/ping/13-Lain-ke-Yasuo-Miho-Kuma.jpg)
-
-**14 Lain-ke-Collective-Ghost-Lilith**
-
-![14-Lain-ke-Collective-Ghost-Lilith](images/ping/14-Lain-ke-Collective-Ghost-Lilith.jpg)
-
-**15 Lain-ke-Specter-Chisa-Hodgeson**
-
-![15-Lain-ke-Specter-Chisa-Hodgeson](images/ping/15-Lain-ke-Specter-Chisa-Hodgeson.jpg)
-
-**16 Lain-ke-Eiri-Semi-Mika**
-
-![16-Lain-ke-Eiri-Semi-Mika](images/ping/16-Lain-ke-Eiri-Semi-Mika.jpg)
+*(Sisa screenshot CPT tersimpan di folder images/ping/)*
 
 ---
 
-## 9. Perhitungan CIDR (GNS3)
+## 9. Perhitungan & Konfigurasi CIDR (GNS3)
 
-_(Bagian ini diisi oleh anggota yang mengerjakan GNS3.)_
+Pada GNS3, desain IP menggunakan pendekatan **CIDR (Classless Inter-Domain Routing)** yang menggabungkan subnet ke dalam blok Supernet. Selain itu, pengerjaan diwajibkan menggunakan sistem shell script pada Docker Container.
 
-- Penggabungan subnet: lihat sheet **Penggabungan - CIDR** pada `Jarkom-Modul-4-2026-K-23.xlsx`
-- Pembagian IP: lihat sheet **Pembagian IP - CIDR**
-- Tree CIDR:
+### 9.1 Pembagian IP (CIDR)
+Penggabungan subnet dan pembagian IP lengkapnya dapat dilihat secara rinci pada sheet **Penggabungan - CIDR** dan **Pembagian IP - CIDR** di file `Jarkom-Modul-4-2026-K-23.xlsx`.
+
+Berikut adalah hirarki penggabungan supernet utamanya:
+- **C1 (Supernet Keseluruhan)**: `10.75.0.0/17`
+  - **B1 (Cabang Kiri - Jalur Psyche dst)**: `10.75.32.0/19`
+  - **B2 (Cabang Kanan - Jalur Navi)**: `10.75.64.0/22`
+  - **B3 (Cabang Bawah - Jalur Tachibana dst)**: `10.75.80.0/21`
+
+### 9.2 Tree CIDR
+Visualisasi pemecahan subnet dari root supernet (C1) hingga host dapat dilihat pada diagram pohon berikut:
 
 ![Tree CIDR](images/tree/Tree-CIDR-K23.png)
 
-- Script konfigurasi: [`script.txt`](modul%204%20jarkom%20CIDR%20GNS3/script.txt)
+### 9.3 Konfigurasi Perangkat GNS3
+Sesuai aturan Modul 4, seluruh host (PC) digantikan menggunakan Docker Container berbasis Alpine Linux ringan yaitu `ardhptr21/alpinet:latest`. 
+
+Seluruh pengaturan IP, Routing Statis, dan Forwarding tidak diset melalui GUI, melainkan ditulis menggunakan script bash `cat << 'EOF' > /root/setup.sh` di dalam terminal konsol perangkat.
+
+**Contoh Script Gateway Utama & NAT Cloud (Router Cyberia):**
+```bash
+cat << 'EOF' > /root/setup.sh
+#!/bin/bash
+ip link set dev eth0 up
+ip link set dev eth1 up
+ip link set dev eth2 up
+
+# IP Static & Default Route NAT GNS3
+ip addr add 192.168.122.100/24 dev eth0 2>/dev/null || true
+ip route add default via 192.168.122.1 dev eth0 2>/dev/null || true
+
+# IP Internal Cyberia
+ip addr add 10.75.0.1/25 dev eth1 2>/dev/null || true
+ip addr add 10.75.0.129/30 dev eth2 2>/dev/null || true
+
+# Forwarding & NAT Masquerade
+sysctl -w net.ipv4.ip_forward=1
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE 2>/dev/null || true
+
+# Route Supernet C1 ke seluruh internal The Wired
+ip route add 10.75.0.0/17 via 10.75.0.130 2>/dev/null || true
+EOF
+bash /root/setup.sh
+```
+
+**Contoh Script Ujung Host Docker (Host Lain):**
+```bash
+cat << 'EOF' > /root/setup.sh
+#!/bin/bash
+ip addr add 10.75.86.2/26 dev eth0 2>/dev/null || true
+ip link set dev eth0 up
+ip route add default via 10.75.86.1 2>/dev/null || true
+EOF
+bash /root/setup.sh
+```
+
+*(Kumpulan lengkap script setiap node di GNS3 disertakan dalam file `script.txt` di dalam folder CIDR GNS3).*
+
+### 9.4 Pengujian GNS3
+Pengujian di terminal node **Lain** (titik ujung terdalam jaringan). Keduanya menunjukkan balasan sukses (*0% packet loss*), menandakan konfigurasi routing Supernet/Subnet CIDR dan proses NAT Gateway berjalan sempurna.
+
+**1. Ping Lintas Subnet (Node Lain ke Node JJ)**
+```text
+Lain:~# ping 10.75.0.2
+PING 10.75.0.2 (10.75.0.2) 56(84) bytes of data.
+64 bytes from 10.75.0.2: icmp_seq=1 ttl=56 time=3.53 ms
+64 bytes from 10.75.0.2: icmp_seq=2 ttl=56 time=1.88 ms
+...
+--- 10.75.0.2 ping statistics ---
+6 packets transmitted, 6 received, 0% packet loss, time 5008ms
+```
+
+**2. Ping ke Internet (Node Lain via NAT Cloud)**
+```text
+Lain:~# ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=104 time=24.2 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=104 time=24.5 ms
+...
+--- 8.8.8.8 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+```
