@@ -27,17 +27,17 @@ Sesuai ketentuan soal, CPT dan GNS3 memakai metode classless yang berbeda: **VLS
 
 ```
 Jarkom-Modul-4-2026-K-23/
+├── README.md
 ├── Jarkom-Modul-4-2026-K-23.xlsx        # Spreadsheet perhitungan (Rute, VLSM, CIDR)
+├── images/
+│   ├── topologi/                        # Topologi CPT (polos dan dengan penanda subnet)
+│   ├── tree/                            # Tree VLSM dan Tree CIDR
+│   └── ping/                            # Screenshot hasil ping (01–16)
 ├── modul 4 jarkom VLSM cisco/
-│   ├── Jarkom-Modul-4-2026-K-23.pkt     # File Cisco Packet Tracer
-│   ├── Topologi-VLSM-K23-a.png          # Topologi CPT
-│   ├── Topologi-VLSM-K23-b.png          # Topologi CPT + penanda subnet
-│   ├── Tree/Tree-VLSM-K23.png           # Pohon pembagian IP VLSM
-│   └── hasil-ping-cisco-K23/            # Screenshot hasil ping
+│   └── Jarkom-Modul-4-2026-K-23.pkt     # File Cisco Packet Tracer
 └── modul 4 jarkom CIDR GNS3/
     ├── CIDR K23.gns3project             # Project GNS3
-    ├── script.txt                       # Script konfigurasi node
-    └── IP TREE.png                      # Pohon pembagian IP CIDR
+    └── script.txt                       # Script konfigurasi node
 ```
 
 ---
@@ -46,11 +46,11 @@ Jarkom-Modul-4-2026-K-23/
 
 Topologi The Wired dibangun di Cisco Packet Tracer sesuai gambar soal. **Cyberia adalah satu-satunya router yang terhubung ke Cloud**, dan jumlah host tiap node tertulis pada nama perangkat (contoh: `JJ (95 host)`).
 
-![Topologi CPT](modul%204%20jarkom%20VLSM%20cisco/Topologi-VLSM-K23-a.png)
+![Topologi CPT](images/topologi/Topologi-VLSM-K23-a.png)
 
 Topologi yang sama dengan penanda setiap subnet (A1–A25) beserta prefix-nya:
 
-![Topologi dengan subnet](modul%204%20jarkom%20VLSM%20cisco/Topologi-VLSM-K23-b.png)
+![Topologi dengan subnet](images/topologi/Topologi-VLSM-K23-b.png)
 
 **Perangkat:**
 - 13 router Cisco 2811. Router yang butuh lebih dari 2 port (Cyberia, Wired, Navi, Copland, Schumann, Tachibana, Deus, Protocol7, Knights, Phantoma) ditambah modul **NM-2FE2W** (port Fa1/0 dan Fa1/1).
@@ -189,7 +189,7 @@ Blok `10.75.0.0/19` dibelah dua terus-menerus sampai setiap subnet mendapat temp
 - **Merah**: subnet yang dipakai (A1–A25)
 - **Biru**: blok sisa (tidak dipakai)
 
-![Tree VLSM](modul%204%20jarkom%20VLSM%20cisco/Tree/Tree-VLSM-K23.png)
+![Tree VLSM](images/tree/Tree-VLSM-K23.png)
 
 ---
 
@@ -561,67 +561,67 @@ Pengujian dilakukan dari **JJ** (subnet A1, paling atas) dan **Lain** (subnet A2
 
 **01 JJ-ke-Karl-Lin-Juri**
 
-![01-JJ-ke-Karl-Lin-Juri](modul%204%20jarkom%20VLSM%20cisco/hasil-ping-cisco-K23/01-JJ-ke-Karl-Lin-Juri.jpg)
+![01-JJ-ke-Karl-Lin-Juri](images/ping/01-JJ-ke-Karl-Lin-Juri.jpg)
 
 **02 JJ-ke-Masayuki-Akashic-Omnipresence**
 
-![02-JJ-ke-Masayuki-Akashic-Omnipresence](modul%204%20jarkom%20VLSM%20cisco/hasil-ping-cisco-K23/02-JJ-ke-Masayuki-Akashic-Omnipresence.jpg)
+![02-JJ-ke-Masayuki-Akashic-Omnipresence](images/ping/02-JJ-ke-Masayuki-Akashic-Omnipresence.jpg)
 
 **03 JJ-ke-Denpa-Alice-Reika**
 
-![03-JJ-ke-Denpa-Alice-Reika](modul%204%20jarkom%20VLSM%20cisco/hasil-ping-cisco-K23/03-JJ-ke-Denpa-Alice-Reika.jpg)
+![03-JJ-ke-Denpa-Alice-Reika](images/ping/03-JJ-ke-Denpa-Alice-Reika.jpg)
 
 **04 JJ-ke-Taro-Yasuo-Miho**
 
-![04-JJ-ke-Taro-Yasuo-Miho](modul%204%20jarkom%20VLSM%20cisco/hasil-ping-cisco-K23/04-JJ-ke-Taro-Yasuo-Miho.jpg)
+![04-JJ-ke-Taro-Yasuo-Miho](images/ping/04-JJ-ke-Taro-Yasuo-Miho.jpg)
 
 **05 JJ-ke-Kuma-Collective-Ghost**
 
-![05-JJ-ke-Kuma-Collective-Ghost](modul%204%20jarkom%20VLSM%20cisco/hasil-ping-cisco-K23/05-JJ-ke-Kuma-Collective-Ghost.jpg)
+![05-JJ-ke-Kuma-Collective-Ghost](images/ping/05-JJ-ke-Kuma-Collective-Ghost.jpg)
 
 **06 JJ-ke-Lilith-Specter-Chisa**
 
-![06-JJ-ke-Lilith-Specter-Chisa](modul%204%20jarkom%20VLSM%20cisco/hasil-ping-cisco-K23/06-JJ-ke-Lilith-Specter-Chisa.jpg)
+![06-JJ-ke-Lilith-Specter-Chisa](images/ping/06-JJ-ke-Lilith-Specter-Chisa.jpg)
 
 **07 JJ-ke-Hodgeson-Eiri-Semi**
 
-![07-JJ-ke-Hodgeson-Eiri-Semi](modul%204%20jarkom%20VLSM%20cisco/hasil-ping-cisco-K23/07-JJ-ke-Hodgeson-Eiri-Semi.jpg)
+![07-JJ-ke-Hodgeson-Eiri-Semi](images/ping/07-JJ-ke-Hodgeson-Eiri-Semi.jpg)
 
 **08 JJ-ke-Lain-Mika-MyuMyu**
 
-![08-JJ-ke-Lain-Mika-MyuMyu](modul%204%20jarkom%20VLSM%20cisco/hasil-ping-cisco-K23/08-JJ-ke-Lain-Mika-MyuMyu.jpg)
+![08-JJ-ke-Lain-Mika-MyuMyu](images/ping/08-JJ-ke-Lain-Mika-MyuMyu.jpg)
 
 **09 Lain-ke-JJ-MyuMyu-Karl**
 
-![09-Lain-ke-JJ-MyuMyu-Karl](modul%204%20jarkom%20VLSM%20cisco/hasil-ping-cisco-K23/09-Lain-ke-JJ-MyuMyu-Karl.jpg)
+![09-Lain-ke-JJ-MyuMyu-Karl](images/ping/09-Lain-ke-JJ-MyuMyu-Karl.jpg)
 
 **10 Lain-ke-Lin-Juri-Masayuki**
 
-![10-Lain-ke-Lin-Juri-Masayuki](modul%204%20jarkom%20VLSM%20cisco/hasil-ping-cisco-K23/10-Lain-ke-Lin-Juri-Masayuki.jpg)
+![10-Lain-ke-Lin-Juri-Masayuki](images/ping/10-Lain-ke-Lin-Juri-Masayuki.jpg)
 
 **11 Lain-ke-Akashic-Omnipresence-Denpa**
 
-![11-Lain-ke-Akashic-Omnipresence-Denpa](modul%204%20jarkom%20VLSM%20cisco/hasil-ping-cisco-K23/11-Lain-ke-Akashic-Omnipresence-Denpa.jpg)
+![11-Lain-ke-Akashic-Omnipresence-Denpa](images/ping/11-Lain-ke-Akashic-Omnipresence-Denpa.jpg)
 
 **12 Lain-ke-Alice-Reika-Taro**
 
-![12-Lain-ke-Alice-Reika-Taro](modul%204%20jarkom%20VLSM%20cisco/hasil-ping-cisco-K23/12-Lain-ke-Alice-Reika-Taro.jpg)
+![12-Lain-ke-Alice-Reika-Taro](images/ping/12-Lain-ke-Alice-Reika-Taro.jpg)
 
 **13 Lain-ke-Yasuo-Miho-Kuma**
 
-![13-Lain-ke-Yasuo-Miho-Kuma](modul%204%20jarkom%20VLSM%20cisco/hasil-ping-cisco-K23/13-Lain-ke-Yasuo-Miho-Kuma.jpg)
+![13-Lain-ke-Yasuo-Miho-Kuma](images/ping/13-Lain-ke-Yasuo-Miho-Kuma.jpg)
 
 **14 Lain-ke-Collective-Ghost-Lilith**
 
-![14-Lain-ke-Collective-Ghost-Lilith](modul%204%20jarkom%20VLSM%20cisco/hasil-ping-cisco-K23/14-Lain-ke-Collective-Ghost-Lilith.jpg)
+![14-Lain-ke-Collective-Ghost-Lilith](images/ping/14-Lain-ke-Collective-Ghost-Lilith.jpg)
 
 **15 Lain-ke-Specter-Chisa-Hodgeson**
 
-![15-Lain-ke-Specter-Chisa-Hodgeson](modul%204%20jarkom%20VLSM%20cisco/hasil-ping-cisco-K23/15-Lain-ke-Specter-Chisa-Hodgeson.jpg)
+![15-Lain-ke-Specter-Chisa-Hodgeson](images/ping/15-Lain-ke-Specter-Chisa-Hodgeson.jpg)
 
 **16 Lain-ke-Eiri-Semi-Mika**
 
-![16-Lain-ke-Eiri-Semi-Mika](modul%204%20jarkom%20VLSM%20cisco/hasil-ping-cisco-K23/16-Lain-ke-Eiri-Semi-Mika.jpg)
+![16-Lain-ke-Eiri-Semi-Mika](images/ping/16-Lain-ke-Eiri-Semi-Mika.jpg)
 
 ---
 
@@ -633,6 +633,6 @@ _(Bagian ini diisi oleh anggota yang mengerjakan GNS3.)_
 - Pembagian IP: lihat sheet **Pembagian IP - CIDR**
 - Tree CIDR:
 
-![Tree CIDR](modul%204%20jarkom%20CIDR%20GNS3/IP%20TREE.png)
+![Tree CIDR](images/tree/Tree-CIDR-K23.png)
 
 - Script konfigurasi: [`script.txt`](modul%204%20jarkom%20CIDR%20GNS3/script.txt)
