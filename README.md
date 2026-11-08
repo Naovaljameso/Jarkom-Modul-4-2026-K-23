@@ -4,7 +4,7 @@
 | Nama | NRP | Bagian |
 |---|---|---|
 | Naoval James Osamah | 5027251092 | Cisco Packet Tracer — **VLSM** |
-| _(nama teman)_ | _(NRP)_ | GNS3 — **CIDR** |
+| Nur Rizki Syahbana | _(NRP)_ | GNS3 — **CIDR** |
 
 Sesuai ketentuan soal, CPT dan GNS3 memakai metode classless yang berbeda: **VLSM di CPT** dan **CIDR di GNS3**.
 
